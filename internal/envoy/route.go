@@ -27,9 +27,12 @@ import (
 // If len(services) is greater than one, the route's action will be a
 // weighted cluster.
 func RouteRoute(r *dag.Route, services []*dag.TCPService) *route.Route_Route {
+	idleTimeout, _ := time.ParseDuration("60s")
+
 	ra := route.RouteAction{
 		RetryPolicy:   retryPolicy(r),
 		Timeout:       timeout(r),
+		IdleTimeout:   duration(idleTimeout),
 		PrefixRewrite: r.PrefixRewrite,
 	}
 
